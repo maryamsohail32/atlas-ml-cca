@@ -7,6 +7,11 @@
 **Machine Learning Lab (AI-3202) · Lab 14: Complex Computing Activity**
 **Dawood University of Engineering & Technology, Karachi**
 
+## 🚀 [Live Demo: atlas-ml-cca.netlify.app](https://atlas-ml-cca.netlify.app)
+
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Open%20the%20console-brightgreen?style=for-the-badge)](https://atlas-ml-cca.netlify.app)
+[![Repository](https://img.shields.io/badge/GitHub-maryamsohail32%2Fatlas--ml--cca-181717?style=for-the-badge&logo=github)](https://github.com/maryamsohail32/atlas-ml-cca)
+
 [![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
@@ -18,7 +23,7 @@
 ![Pairs](https://img.shields.io/badge/Dataset-56%20Moon--Earth%20pairs-orange?style=flat-square)
 ![Sites](https://img.shields.io/badge/Earth%20sites-14-blue?style=flat-square)
 ![Moon bases](https://img.shields.io/badge/Lunar%20bases-4-blueviolet?style=flat-square)
-![Best regression](https://img.shields.io/badge/Best%20regression%20R²-0.982-success?style=flat-square)
+![Best regression](https://img.shields.io/badge/Best%20regression%20R²-0.9817-success?style=flat-square)
 ![Best classification](https://img.shields.io/badge/Best%20classification%20accuracy-91.1%25-success?style=flat-square)
 ![Status](https://img.shields.io/badge/Status-Coursework%20project-informational?style=flat-square)
 
@@ -49,15 +54,15 @@
 
 | | |
 |:---|:---|
-| [✨ What ATLAS-ML does](#what-it-does) | [📊 Results](#results) |
-| [🖼️ Visual showcase](#showcase) | [🚀 Quick start](#quick-start) |
-| [🧠 The three ML tasks](#ml-tasks) | [💻 Usage and demo](#usage) |
-| [🏗️ Architecture](#architecture) | [🔌 API documentation](#api) |
-| [📂 Project structure](#structure) | [🧪 Testing](#testing) |
-| [🗄️ Data and sources](#data) | [⚠️ Limitations and ethics](#limitations) |
-| [🧭 Lab concepts map](#lab-map) | [🔮 Future improvements](#future) |
-| [👥 Team](#team) | [🤝 Contributing](#contributing) |
-| [🙏 Acknowledgements](#acknowledgements) | |
+| [✨ What ATLAS-ML does](#what-it-does) | [🛰️ The mission-control console](#console) |
+| [🖼️ Visual showcase](#showcase) | [📊 Results](#results) |
+| [🧠 The three ML tasks](#ml-tasks) | [🚀 Quick start](#quick-start) |
+| [🏗️ Architecture](#architecture) | [💻 Usage and demo](#usage) |
+| [📂 Project structure](#structure) | [🔌 API documentation](#api) |
+| [🗄️ Data and sources](#data) | [🧪 Testing](#testing) |
+| [🧭 Lab concepts map](#lab-map) | [⚠️ Limitations and ethics](#limitations) |
+| [👥 Team](#team) | [🔮 Future improvements](#future) |
+| [🤝 Contributing](#contributing) | [🙏 Acknowledgements](#acknowledgements) |
 
 ---
 
@@ -77,8 +82,10 @@ weights: slope 0.30 · flat 0.20 · temperature 0.20 · soil 0.15 · relief 0.15
 (weights were fixed before seeing the results)
 ```
 
-ATLAS-ML then builds three machine learning systems on top of those 56 scored pairs, serves them through a
-**FastAPI** backend, and presents them in a **Streamlit** dashboard with a live prediction playground.
+ATLAS-ML then builds three machine learning systems on top of those 56 scored pairs. The flagship way to
+explore everything is the original ATLAS **mission-control console**, now with a dedicated **ML Lab view**,
+live at **[atlas-ml-cca.netlify.app](https://atlas-ml-cca.netlify.app)**. A **FastAPI** backend and a
+**Streamlit** dashboard are included as well, and both are described below.
 
 ### Key features
 
@@ -90,10 +97,63 @@ ATLAS-ML then builds three machine learning systems on top of those 56 scored pa
   5-fold cross-validation because 56 samples are too few for a single lucky split
 - ⚖️ **Imbalance-aware classification**: suitability classes are uneven (36 Moderate, 13 High, 7 Low), so the
   project reports per-class precision and recall from stratified folds, not accuracy alone
+- 🛰️ **The full console, self-contained**: the mission-control web app in `webapp/` runs entirely in the
+  browser with no backend, including a predict playground that uses the trained model's own coefficients
 - 🔁 **A backend that never breaks**: the prediction API uses the trained model when it exists and falls back
   to the original ATLAS formula when it does not
-- 🖥️ **A frontend with a fallback too**: the dashboard tries the API first and reads the local CSV files
-  when the backend is not running, so the demo always works
+- 🖥️ **A frontend with a fallback too**: the Streamlit dashboard tries the API first and reads the local CSV
+  files when the backend is not running, so the demo always works
+
+---
+
+<a id="console"></a>
+## 🛰️ The mission-control console (flagship app)
+
+**Live demo: [https://atlas-ml-cca.netlify.app](https://atlas-ml-cca.netlify.app)**
+
+The console is the original ATLAS interface from the NASA Space Apps project, kept exactly as it was,
+with one new view added for this lab. It lives in this repository under `webapp/` as a self-contained
+static site (20 files, no build step, no backend) and is deployed on Netlify.
+
+### The original views, unchanged
+
+- **Overview**: world map and globe with all 14 Earth sites, the selected base, its ranked analogs,
+  the best match ringed in orange and the runner-up in mint, plus the live Site Feed and Mission Log
+- **Bases**: the four lunar bases, measured from NASA PDS data
+- **Finder**: pick a base, apply mission presets or move the weight sliders, and all 14 sites
+  re-score and re-rank live
+- **Compare**: head-to-head radar of one base against one site, factor by factor
+- **Mars**: the same terrain method applied to Jezero Crater from MOLA data
+- **Method**: formula, weights, sources and limitations
+
+### The new ML Lab view
+
+- **Lab map strip**: which labs (1 to 12) map to the preprocessing, regression, classification
+  and clustering work
+- **Results tables**: the full regression, classification and clustering results from
+  [Results](#results), with the winning model of each task highlighted
+- **The four result plots**: confusion matrix, Random Forest feature importance, cluster scatter
+  and dendrogram, served from the project's own outputs
+- **Predict playground**: set the five pillar distances and get a predicted Analog Score computed
+  **in the browser**. The playground uses the trained best regressor (StandardScaler + Linear
+  Regression) exported coefficient for coefficient from `outputs/models/best_regressor.joblib`,
+  and its outputs were verified identical to the FastAPI backend on repeated test inputs,
+  including the soil-missing case (median value plus flag)
+
+### Deployment note
+
+The Netlify site is a **manual deploy** of the `webapp/` folder, not an automatic deploy from this
+repository. To redeploy after a change, drop the updated `webapp/` folder on Netlify again.
+The repository itself stays the single source of truth for the code.
+
+### The other two interfaces
+
+- **Streamlit dashboard** (`frontend/app.py`): the same rankings, model results and a predict
+  playground in Streamlit, restyled in the mission-control theme (dark glass panels, one orange
+  accent) with the matching `.streamlit/config.toml`. It calls the backend when it is running
+  and falls back to the local CSV files when it is not
+- **FastAPI backend** (`backend/main.py`): serves the pairs, rankings, sites and metrics, and
+  answers live predictions from the trained model (see [API documentation](#api))
 
 ---
 
@@ -101,6 +161,7 @@ ATLAS-ML then builds three machine learning systems on top of those 56 scored pa
 ## 🖼️ Visual showcase
 
 All four plots below are generated by the model scripts in this repository and live in `outputs/plots/`.
+They are also the four plots shown inside the console's ML Lab view.
 
 | | |
 |:---:|:---:|
@@ -120,7 +181,7 @@ All four plots below are generated by the model scripts in this repository and l
 | **Data** | 56 pairs, 6 features (5 distances + soil-missing flag) | 56 pairs, classes banded from the score: High ≥ 60, Moderate 45 to 60, Low < 45 | 14 sites, 7 physical features |
 | **Models** | Linear Regression, Random Forest, KNN | Logistic Regression, Decision Tree, SVM (RBF) | K-Means (k scanned 2 to 6), Hierarchical (Ward) |
 | **Evaluation** | 5-fold CV: MAE, RMSE, R² | 5-fold stratified CV accuracy + per-class report | Silhouette score, Adjusted Rand Index between the two methods |
-| **Winner** | Linear Regression, R² **0.982** | Logistic Regression, **91.1%** | Best k = 5, silhouette 0.279, ARI **0.81** |
+| **Winner** | Linear Regression, R² **0.9817** | Logistic Regression, **91.1%** | Best k = 5, silhouette 0.2788, ARI **0.8083** |
 | **Code** | `src/models/regression.py` | `src/models/classification.py` | `src/models/clustering.py` |
 
 <details>
@@ -167,12 +228,16 @@ flowchart LR
     C1 --> F
     F --> G["🖥️ Streamlit dashboard<br>frontend/app.py"]
     C1 -. "fallback if API is off" .-> G
+    E --> H["🛰️ Mission-control console<br>webapp/ (static, in-browser ML)<br>live on Netlify"]
+    C1 --> H
 ```
 
 **Workflow, in plain words:** raw profiles are cleaned by one pipeline script into two model-ready
 datasets. Three independent model scripts read those datasets and write every metric, plot and the
 trained best model into `outputs/`. The backend serves the data, the metrics and live predictions.
 The dashboard displays rankings and results, and its prediction playground calls the backend.
+The console packages the same data and results as a static site: its ML Lab view shows the tables
+and plots, and its playground runs the trained linear model directly in the browser.
 
 ---
 
@@ -183,6 +248,18 @@ The dashboard displays rankings and results, and its prediction playground calls
 atlas-ml-cca/
 ├── README.md                  ← you are here
 ├── requirements.txt           ← all Python dependencies
+├── .streamlit/
+│   └── config.toml            ← mission-control theme for the Streamlit dashboard
+├── webapp/                    ← the mission-control console (static, 20 files)
+│   ├── index.html             ← console shell: Overview, Bases, Finder, Compare, Mars, Method, ML Lab
+│   ├── app.js                 ← console logic, map and globe, live re-weighting
+│   ├── ml-lab.js              ← ML Lab view: results tables, plots, in-browser predict playground
+│   ├── static-data.js         ← snapshot of the console data (pairs, bases, sites)
+│   ├── static-api.js          ← in-browser stand-in for the console data endpoints
+│   ├── styles.css             ← the original ATLAS design system
+│   ├── vendor/                ← Leaflet map library
+│   ├── api/downloads/         ← CSV downloads offered inside the console
+│   └── outputs/               ← base terrain hillshades + the 4 ML plots
 ├── data/
 │   ├── moon_profiles.csv      ← 4 lunar bases (NASA PDS)
 │   ├── earth_profiles.csv     ← 14 Earth sites (DEM, climate, soil)
@@ -199,7 +276,7 @@ atlas-ml-cca/
 │   ├── main.py                ← FastAPI service (6 endpoints)
 │   └── README.md              ← API notes
 ├── frontend/
-│   └── app.py                 ← Streamlit dashboard (3 sections)
+│   └── app.py                 ← Streamlit dashboard, mission-control themed (3 sections)
 ├── notebooks/
 │   └── 01_eda.ipynb           ← exploratory data analysis
 ├── tests/
@@ -224,9 +301,9 @@ Cross-validation is 5-fold throughout (stratified for classification).
 
 | Model | CV MAE | CV RMSE | CV R² | Test R² |
 |:---|:---:|:---:|:---:|:---:|
-| **Linear Regression** | **0.82** | **1.00** | **0.982** | 0.987 |
-| Random Forest | 3.26 | 3.86 | 0.729 | 0.815 |
-| KNN Regressor (k = 5) | 3.20 | 4.10 | 0.696 | 0.850 |
+| **Linear Regression** | **0.816** | **1.003** | **0.9817** | 0.9865 |
+| Random Forest | 3.255 | 3.863 | 0.7292 | 0.8147 |
+| KNN Regressor (k = 5) | 3.204 | 4.096 | 0.6956 | 0.8504 |
 
 ### 🏷️ Classification: suitability class
 
@@ -257,10 +334,10 @@ class-imbalance effect. That is why this project reports the full table, not acc
 
 | k | 2 | 3 | 4 | **5** | 6 |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| Silhouette | 0.274 | 0.241 | 0.251 | **0.279** | 0.266 |
+| Silhouette | 0.2735 | 0.2414 | 0.2509 | **0.2788** | 0.2656 |
 
 Silhouette scores are low at every k, so the regimes are **soft and overlapping**, not hard groups.
-K-Means and Hierarchical clustering still agree strongly (**Adjusted Rand Index 0.81**), which shows
+K-Means and Hierarchical clustering still agree strongly (**Adjusted Rand Index 0.8083**), which shows
 the regimes are not an artifact of one algorithm.
 
 <details>
@@ -283,6 +360,28 @@ the regimes are not an artifact of one algorithm.
 
 <a id="quick-start"></a>
 ## 🚀 Quick start
+
+There are **three ways to run this project**. Route 1 needs nothing at all.
+
+### Route 1: the live console (nothing to install)
+
+Open **[https://atlas-ml-cca.netlify.app](https://atlas-ml-cca.netlify.app)** in any browser.
+Everything runs on the page, including the ML Lab predict playground.
+
+### Route 2: the console, locally
+
+The console is a static site, so any static file server works:
+
+```bash
+git clone https://github.com/maryamsohail32/atlas-ml-cca.git
+cd atlas-ml-cca/webapp
+python -m http.server 8000
+# then open http://127.0.0.1:8000 in a browser
+```
+
+No Python packages are needed for this route, and no backend has to run.
+
+### Route 3: Streamlit dashboard + FastAPI backend, locally
 
 **Prerequisites:** Python 3.11 or newer, and Git.
 
@@ -315,7 +414,16 @@ defaults to `http://127.0.0.1:8000` when it is not set.
 <a id="usage"></a>
 ## 💻 Usage and demo
 
-Run the two servers in **two separate terminals**, from the repo root:
+**Console (recommended demo):** open the
+[live site](https://atlas-ml-cca.netlify.app) (or run Route 2 above) and walk through:
+
+1. **Overview**: pick Shackleton and show Klyuchevskaya ranked first with a score of 69.7,
+   ringed in orange on the map
+2. **Finder**: move a weight slider and show all 14 sites re-scoring and re-ranking live
+3. **ML Lab**: show the lab map strip, the regression table (Linear Regression R² 0.9817),
+   the plots, and run the predict playground in the browser
+
+**Streamlit route:** run the two servers in **two separate terminals**, from the repo root:
 
 ```bash
 # Terminal 1: backend API on http://127.0.0.1:8000
@@ -325,12 +433,9 @@ uvicorn backend.main:app --port 8000
 streamlit run frontend/app.py
 ```
 
-**Suggested demo order (2 minutes):**
-
 1. **Rankings explorer**: pick a lunar base, for example de Gerlache, and show Mount Erebus ranked
    first with a score of 72.1
-2. **Model results**: show the regression table (Linear Regression R² 0.982), the confusion matrix
-   and the cluster plot
+2. **Model results**: show the regression table, the confusion matrix and the cluster plot
 3. **Predict playground**: move the five pillar-distance sliders and predict a score live.
    Stop the backend and repeat: the dashboard falls back to the local files and keeps working,
    while the playground explains that the backend is off
@@ -385,6 +490,8 @@ Notes:
 - If `outputs/models/best_regressor.joblib` does not exist yet, the API falls back to the original
   ATLAS formula (`100 * exp(-weighted distance)`, weights renormalised when soil is missing),
   and the `source` field says so
+- The console's ML Lab playground answers the same prediction in the browser, from the same
+  trained model, with no API call at all
 
 </details>
 
@@ -443,6 +550,9 @@ indicator instead of dropping those pairs.
 - **Missing data is geographic, not random**: soil coverage gaps follow the map (Antarctica,
   Etosha), which is exactly why a missingness flag is kept instead of pretending the imputed
   values were measured
+- **The live console is a snapshot**: the static site serves the data and results produced by the
+  current pipeline. Re-running the pipeline and changing the CSVs means the console data snapshot
+  in `webapp/` has to be regenerated and redeployed
 - **No site is being recommended for a real mission**: this is a coursework ranking model built
   for learning and demonstration, not an engineering certification
 
@@ -463,7 +573,8 @@ indicator instead of dropping those pairs.
 | 10 | K-Means Clustering | `src/models/clustering.py`, silhouette scan for k = 2 to 6 |
 | 11 | Hierarchical Clustering | `src/models/clustering.py`, Ward dendrogram, ARI comparison |
 
-Plus deployment and visualisation beyond the lab list: a **FastAPI** backend and a **Streamlit** frontend.
+Plus deployment and visualisation beyond the lab list: a **FastAPI** backend, a **Streamlit**
+frontend, and the static **mission-control console** with in-browser model inference.
 
 <details>
 <summary><b>🧰 Tech stack, in one place</b> (click to expand)</summary>
@@ -472,12 +583,13 @@ Plus deployment and visualisation beyond the lab list: a **FastAPI** backend and
 
 | Layer | Technology |
 |:---|:---|
-| Language | Python |
+| Language | Python (ML, backend, Streamlit), HTML/CSS/JavaScript (console) |
 | Data handling | pandas, NumPy |
 | Machine learning | scikit-learn, SciPy (hierarchical clustering), joblib (model persistence) |
-| Visualisation | Matplotlib |
+| Visualisation | Matplotlib, Leaflet (console map) |
 | Backend | FastAPI, Uvicorn, Pydantic |
-| Frontend | Streamlit, requests |
+| Frontend | Streamlit, requests; the console is plain static HTML, CSS and JavaScript |
+| Hosting | Netlify (manual drop of the `webapp/` folder) |
 | Testing | pytest |
 | Version control workflow | Git and GitHub, one ownership area and real commits per member |
 
@@ -493,7 +605,8 @@ Exact minimum versions are pinned as lower bounds in `requirements.txt`.
 These are **plans, not existing features**:
 
 - Grow the dataset beyond 14 Earth sites, which is the single biggest limit on every model here
-- Add a map view to the dashboard so rankings can be explored geographically
+- Connect the Netlify deploy to this repository so the console redeploys automatically on push,
+  instead of a manual folder drop
 - Try gradient boosting regressors and compare them honestly against the linear baseline
 - Add automated tests for the backend endpoints, alongside the existing pipeline tests
 - Add a `LICENSE` file and a tagged release once the coursework submission is complete
@@ -505,14 +618,15 @@ These are **plans, not existing features**:
 <a id="team"></a>
 ## 👥 Team
 
-Four equal members, one ownership area each, and real commits from every member in this repository:
+Four equal members, no lead, one ownership area each, and real commits from every member in
+this repository (18 commits in total):
 
-| Member | Ownership area | Main files |
-|:---|:---|:---|
-| Maryam Sohail Ahmed ([@maryamsohail32](https://github.com/maryamsohail32)) | Data pipeline, EDA, tests, README | `src/data_pipeline.py`, `notebooks/01_eda.ipynb`, `tests/` |
-| Muhammad Ubaid Idrees ([@Ubaidrees](https://github.com/Ubaidrees)) | ML models: regression, classification, clustering | `src/models/` |
-| Mariyam ([@Mariyam1221](https://github.com/Mariyam1221))| Backend API | `backend/main.py` |
-| Zayyam Latif ([@zayyam2836](https://github.com/zayyam2836)) | Frontend dashboard, requirements, project report | `frontend/app.py`, `docs/` |
+| Member | Ownership area | Commits | Main files |
+|:---|:---|:---:|:---|
+| Maryam Sohail Ahmed ([@maryamsohail32](https://github.com/maryamsohail32)) | Data pipeline, EDA, tests, README, mission-control webapp | 7 | `src/data_pipeline.py`, `notebooks/01_eda.ipynb`, `tests/`, `webapp/` |
+| Muhammad Ubaid Idrees ([@Ubaidrees](https://github.com/Ubaidrees)) | ML models: regression, classification, clustering | 4 | `src/models/` |
+| Mariyam ([@mariyam1221](https://github.com/mariyam1221)) | Backend API | 1 | `backend/main.py` |
+| Muhammad Zayyam Latif ([@zayyam2836](https://github.com/zayyam2836)) | Frontend dashboard, requirements, project report | 6 | `frontend/app.py`, `requirements.txt`, `docs/` |
 
 **Course:** Machine Learning (Practical), AI-3202 · **Instructor:** Engr. Hamza Farooqui ·
 **Institution:** Dawood University of Engineering & Technology
