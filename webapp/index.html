@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ATLAS — Lunar Analog Survey Console | Team Binary Knights</title>
+<meta name="description" content="ATLAS mission console: four Moon base sites measured from NASA LRO data, 14 newly discovered Earth analog sites ranked live. Team Binary Knights, NASA Space Apps Challenge 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://mt0.google.com">
+<link rel="preconnect" href="https://mt1.google.com">
+<link rel="preconnect" href="https://mt2.google.com">
+<link rel="preconnect" href="https://mt3.google.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="vendor/leaflet.css">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='13' fill='%2304070a'/><circle cx='16' cy='16' r='13' fill='none' stroke='%23ff7a1a' stroke-width='2'/><circle cx='16' cy='16' r='4' fill='%234fe3c1'/></svg>">
+</head>
+<body>
+
+<div class="shell">
+  <!-- ======================= LEFT RAIL ======================= -->
+  <aside class="rail" aria-label="Primary">
+    <a class="rail-logo" href="#overview" data-nav="overview" title="ATLAS console">A<span>·</span></a>
+    <nav class="rail-nav">
+      <a class="ritem active" href="#overview" data-nav="overview">
+        <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/></svg><span>Overview</span></a>
+      <a class="ritem" href="#bases" data-nav="bases">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="9" cy="9" r="2.2"/></svg><span>Bases</span></a>
+      <a class="ritem" href="#finder" data-nav="finder">
+        <svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6"/><line x1="15" y1="15" x2="20" y2="20"/></svg><span>Finder</span></a>
+      <a class="ritem" href="#compare" data-nav="compare">
+        <svg viewBox="0 0 24 24"><path d="M12 4 L21 20 L3 20 Z"/></svg><span>Compare</span></a>
+      <a class="ritem" href="#mars" data-nav="mars">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" class="mars-o"/></svg><span>Mars</span></a>
+      <a class="ritem" href="#mllab" data-nav="mllab">
+        <svg viewBox="0 0 24 24"><rect x="4" y="13" width="4" height="7"/><rect x="10" y="8" width="4" height="12"/><rect x="16" y="4" width="4" height="16"/></svg><span>ML Lab</span></a>
+      <a class="ritem" href="#methodology" data-nav="methodology">
+        <svg viewBox="0 0 24 24"><line x1="5" y1="7" x2="19" y2="7"/><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="17" x2="13" y2="17"/></svg><span>Method</span></a>
+    </nav>
+    <a class="ritem rail-foot" href="#finder" id="railData">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><circle cx="12" cy="12" r="8.5"/></svg><span>Data</span></a>
+  </aside>
+
+  <div class="maincol">
+    <!-- ======================= TOP TELEMETRY BAR ======================= -->
+    <header class="topbar">
+      <div class="cell cell-mission"><span class="k">Mission</span><span class="v">LUNAR ANALOG SURVEY</span></div>
+      <div class="cell"><span class="k">Base</span>
+        <select id="topBase" class="top-select" aria-label="Selected Moon base"></select>
+      </div>
+      <div class="cell cell-phase"><span class="k">Phase</span><span class="v" id="topPhase">CONSOLE</span></div>
+      <div class="cell cell-preset"><span class="k">Preset</span><span class="v" id="topPreset">BALANCED</span></div>
+      <div class="top-right">
+        <div class="tcell"><span class="k">Sites scored</span><span class="v mono" id="topScored">—/—</span></div>
+        <div class="tcell"><span class="k">Session</span><span class="v mono" id="topTimer">00:00:00</span></div>
+        <div class="tcell live-cell"><span class="live-dot"></span><span class="v">LIVE</span></div>
+      </div>
+    </header>
+
+    <!-- ======================= STAGE (MAP + VIEWS) ======================= -->
+    <main class="stage" id="stage">
+      <div id="map" aria-label="World map of analog sites"></div>
+      <div class="map-fallback" id="mapFallback" hidden>
+        <p>Map tiles unavailable — all data remains in the panels.</p>
+      </div>
+      <div class="map-tools">
+        <div class="toggle" role="group" aria-label="Map style">
+          <button type="button" class="on" id="tglMap">MAP</button>
+          <button type="button" id="tglGlobe">GLOBE</button>
+        </div>
+        <div class="zoomctl">
+          <button type="button" id="zoomIn" aria-label="Zoom in">+</button>
+          <button type="button" id="zoomOut" aria-label="Zoom out">−</button>
+        </div>
+      </div>
+      <div class="compass mono" aria-hidden="true">N ↑</div>
+
+      <!-- ============ VIEW: CONSOLE / OVERVIEW ============ -->
+      <section class="view view-console active" id="page-overview">
+        <div class="console-grid">
+          <div class="leftcol">
+            <div class="glass panel" id="selBasePanel">
+              <div class="phead"><span class="ptitle">Selected Base</span><span class="chip" id="selBaseChip">—</span></div>
+              <div class="sel-name" id="selBaseName">Loading…</div>
+              <div class="sel-coords mono" id="selBaseCoords"></div>
+              <div class="sel-grid" id="selBaseStats"></div>
+              <p class="panel-note" id="selBaseNote"></p>
+            </div>
+
+            <div class="glass panel">
+              <div class="phead"><span class="ptitle" id="rankPanelTitle">Analog Ranking</span>
+                <a class="pctl" href="#finder" data-nav="finder">All 14 sites ›</a></div>
+              <div id="consoleRanking"><p class="loading">Acquiring ranking…</p></div>
+            </div>
+
+            <div class="glass panel">
+              <div class="phead"><span class="ptitle">Model Health</span>
+                <a class="pctl" href="#methodology" data-nav="methodology">Method ›</a></div>
+              <div class="health" id="modelHealth"></div>
+              <p class="panel-note">Pillar coverage across the 14 sites. A pillar below 10/10 means
+              some sites have no source coverage — those sites are never scored on it.</p>
+            </div>
+
+            <div class="glass panel">
+              <div class="phead"><span class="ptitle">Mission Log</span>
+                <div class="logtabs" id="logTabs">
+                  <button type="button" class="ltab on" data-logtab="all">ALL</button>
+                  <button type="button" class="ltab" data-logtab="alert">ALERTS<span class="bdg" id="alertCount">0</span></button>
+                  <button type="button" class="ltab" data-logtab="info">INFO</button>
+                </div>
+              </div>
+              <div id="missionLog"></div>
+            </div>
+          </div>
+
+          <div class="feed glass" id="feedPanel">
+            <div class="feed-head">
+              <span class="ptitle light" id="feedTitle">Site Feed</span>
+              <span class="chip">TARGET LOCK</span>
+            </div>
+            <div class="viewport">
+              <img id="feedImg" alt="Shaded relief of the selected Moon base">
+              <div class="tape mono" id="tapeSlope"></div>
+              <div class="tape mono right" id="tapeTemp"></div>
+              <div class="reticle" aria-hidden="true">
+                <svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="17"/><circle cx="26" cy="26" r="2.4" class="fill"/><line x1="26" y1="2" x2="26" y2="12"/><line x1="26" y1="40" x2="26" y2="50"/></svg>
+              </div>
+              <div class="feed-score">
+                <div class="mono fs-k">Analog score</div>
+                <div class="fs-v" id="feedScore">—</div>
+                <div class="fs-site" id="feedSite"></div>
+              </div>
+              <div class="feed-cap mono" id="feedCap"></div>
+            </div>
+            <div class="feed-foot mono" id="feedFoot"></div>
+          </div>
+
+          <div class="legend mono" aria-hidden="true">
+            <span><i class="lg-dot"></i>Moon base</span>
+            <span><i class="lg-ring o"></i>Best match</span>
+            <span><i class="lg-ring t"></i>Runner-up</span>
+            <span><i class="lg-line"></i>Rank path</span>
+          </div>
+
+          <div class="basecards" id="baseCards"></div>
+        </div>
+      </section>
+
+      <!-- ============ VIEW: MOON BASES ============ -->
+      <section class="view" id="page-bases">
+        <div class="workspace glass">
+          <div class="ws-head">
+            <div><div class="mono ws-k">LRO LOLA · LPSR · PGDA-69 · DIVINER</div>
+            <h2>The four Moon bases — measured, not guessed</h2></div>
+            <p class="ws-sub">Both lunar poles are processed. The north-pole grids are stored with the
+            opposite row handedness to the south — the mapping was validated against named craters at both poles.</p>
+          </div>
+          <div id="baseProfiles"><p class="loading">Loading base data…</p></div>
+        </div>
+      </section>
+
+      <!-- ============ VIEW: FINDER ============ -->
+      <section class="view" id="page-finder">
+        <div class="workspace glass">
+          <div class="ws-head">
+            <div><div class="mono ws-k">Discovery run · Guide #09</div>
+            <h2>Earth Analog Finder</h2></div>
+            <p class="ws-sub">14 newly discovered candidate sites. The classic catalogued analogs
+            (Atacama, Mauna Kea, Haughton, Rio Tinto, McMurdo, Meteor Crater, Iceland, Svalbard) are
+            excluded on purpose — they served only as the validation control.</p>
+          </div>
+
+          <div class="controls">
+            <div class="ctl-block">
+              <span class="ctl-label">Moon base</span>
+              <div class="seg" id="baseSeg"></div>
+            </div>
+            <div class="ctl-block grow">
+              <span class="ctl-label">Mission profile — re-weights the score live</span>
+              <div class="chips" id="presetChips">
+                <button type="button" class="chipb active" data-preset="balanced">Balanced</button>
+                <button type="button" class="chipb" data-preset="rover">Rover mobility</button>
+                <button type="button" class="chipb" data-preset="habitat">Habitat &amp; structures</button>
+                <button type="button" class="chipb" data-preset="isru">Science &amp; ISRU</button>
+              </div>
+            </div>
+          </div>
+          <details class="weights-box">
+            <summary>Fine-tune the weights</summary>
+            <div class="sliders" id="weightSliders"></div>
+          </details>
+          <p class="custom-banner" id="customBanner" hidden></p>
+
+          <div class="ranklist" id="rankList"><p class="loading">Loading rankings…</p></div>
+
+          <div class="download-row" id="downloads">
+            <span class="ctl-label">Downloads</span>
+            <a class="dbtn" href="/api/downloads/scores" download>Full ranking CSV</a>
+            <a class="dbtn" href="/api/downloads/earth" download>Earth profiles CSV</a>
+            <a class="dbtn" href="/api/downloads/moon" download>Moon profiles CSV</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ VIEW: COMPARE ============ -->
+      <section class="view" id="page-compare">
+        <div class="workspace glass">
+          <div class="ws-head">
+            <div><div class="mono ws-k">Head-to-head</div><h2>Compare base vs site</h2></div>
+            <p class="ws-sub">Per-factor similarity: 1 = identical. A hollow marker means the factor was
+            not scored for that site (no source coverage) — missing data is never scored as zero.</p>
+          </div>
+          <div class="controls">
+            <label class="ctl-block"><span class="ctl-label">Moon base</span>
+              <select id="cmpBase" class="dark-select"></select></label>
+            <label class="ctl-block"><span class="ctl-label">Earth site</span>
+              <select id="cmpSite" class="dark-select"></select></label>
+            <div class="cmp-score" id="compareHead"></div>
+          </div>
+          <div class="compare-grid">
+            <div class="radar-box" id="radarBox"></div>
+            <div>
+              <table class="ctable" id="compareTable">
+                <thead><tr><th>Measure</th><th id="cmpBaseName">Moon base</th><th id="cmpSiteName">Earth site</th></tr></thead>
+                <tbody></tbody>
+              </table>
+              <p class="panel-note">Sun visibility and Earth visibility are deliberately not scored —
+              Earth has no counterpart for them. They are mission context on the Bases page.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ VIEW: MARS ============ -->
+      <section class="view" id="page-mars">
+        <div class="workspace glass">
+          <div class="ws-head">
+            <div><div class="mono ws-k">Extension · MGS MOLA</div><h2>And Mars?</h2></div>
+            <p class="ws-sub">The same terrain method runs on Mars. Jezero Crater was measured from the
+            MOLA MEGDR tile with a ~3 MB HTTP-range window — no bulk download.</p>
+          </div>
+          <div id="marsBox"><p class="loading">Loading Mars data…</p></div>
+          <p class="panel-note">Extending ATLAS to a full Mars ranking (more regions, THEMIS temperature)
+          is the stated roadmap — labelled as future work, not hidden.</p>
+        </div>
+      </section>
+
+      <!-- ============ VIEW: ML LAB (Lab 14 CCA layer) ============ -->
+      <section class="view" id="page-mllab">
+        <div class="workspace glass">
+          <div class="ws-head">
+            <div><div class="mono ws-k">ML LAB AI-3202 · LAB 14 CCA · DAWOOD UNIVERSITY</div>
+            <h2>ML Lab: Learning the Analog Score</h2></div>
+            <p class="ws-sub">The Lab 14 layer on the same ATLAS data. Machine learning models trained on the
+            56 base-site pairs (4 Moon bases × 14 Earth sites) learn to predict, classify and cluster the
+            Analog Score from the five pillar distances alone.</p>
+          </div>
+
+          <div class="ml-labmap" aria-label="Lab map">
+            <div class="ml-step"><span class="ml-step-k mono">LAB 1</span><b>Preprocessing</b>
+              <span>Median imputation, soil_missing flag, label banding</span></div>
+            <div class="ml-arrow">›</div>
+            <div class="ml-step"><span class="ml-step-k mono">LABS 2 · 5 · 8</span><b>Regression</b>
+              <span>Linear, Random Forest and KNN predict the score</span></div>
+            <div class="ml-arrow">›</div>
+            <div class="ml-step"><span class="ml-step-k mono">LABS 3 · 4 · 6</span><b>Classification</b>
+              <span>Logistic, Decision Tree and SVM predict the suitability band</span></div>
+            <div class="ml-arrow">›</div>
+            <div class="ml-step"><span class="ml-step-k mono">LABS 10 · 11</span><b>Clustering</b>
+              <span>K-Means and Hierarchical group the 14 sites</span></div>
+          </div>
+
+          <div class="ml-grid">
+            <div class="ml-card">
+              <div class="phead"><span class="ptitle">Regression: predict the Analog Score</span><span class="chip">5-FOLD CV</span></div>
+              <table class="ctable ml-table">
+                <thead><tr><th>Model</th><th>CV MAE</th><th>CV RMSE</th><th>CV R²</th><th>Test R²</th></tr></thead>
+                <tbody>
+                  <tr class="best"><td><b>Linear Regression</b> <span class="ml-best-tag">BEST</span></td><td>0.816</td><td>1.003</td><td><b>0.9817</b></td><td>0.9865</td></tr>
+                  <tr><td>Random Forest</td><td>3.255</td><td>3.863</td><td>0.7292</td><td>0.8147</td></tr>
+                  <tr><td>KNN Regressor (k=5)</td><td>3.204</td><td>4.096</td><td>0.6956</td><td>0.8504</td></tr>
+                </tbody>
+              </table>
+              <p class="panel-note">Features: the five pillar distances plus the soil_missing flag, standardised
+              with a StandardScaler. The score is a smooth function of the distances, so the linear model wins
+              by a wide margin: CV R² 0.9817, RMSE about 1 point.</p>
+            </div>
+
+            <div class="ml-card">
+              <div class="phead"><span class="ptitle">Classification: predict the suitability band</span><span class="chip">5-FOLD CV</span></div>
+              <table class="ctable ml-table">
+                <thead><tr><th>Model</th><th>CV accuracy</th><th></th></tr></thead>
+                <tbody>
+                  <tr class="best"><td><b>Logistic Regression</b> <span class="ml-best-tag">BEST</span></td><td><b>0.9107</b></td><td>91.1%</td></tr>
+                  <tr><td>Decision Tree</td><td>0.8571</td><td>85.7%</td></tr>
+                  <tr><td>SVM (RBF)</td><td>0.8571</td><td>85.7%</td></tr>
+                </tbody>
+              </table>
+              <p class="panel-note">Target: the High / Moderate / Low suitability band from Lab 1 label banding,
+              with stratified folds and balanced class weights. Logistic Regression per-class F1: High 0.889,
+              Moderate 0.928, Low 0.875.</p>
+            </div>
+          </div>
+
+          <div class="ml-card">
+            <div class="phead"><span class="ptitle">Clustering: environmental regimes of the 14 sites</span><span class="chip">UNSUPERVISED</span></div>
+            <div class="ml-stats">
+              <div class="sel-stat"><div class="k">Best k (silhouette scan)</div><div class="v">5</div></div>
+              <div class="sel-stat"><div class="k">K-Means silhouette</div><div class="v">0.2788</div></div>
+              <div class="sel-stat"><div class="k">Hierarchical silhouette</div><div class="v">0.2445</div></div>
+              <div class="sel-stat"><div class="k">Agreement (ARI)</div><div class="v">0.8083</div></div>
+            </div>
+            <p class="panel-note">Silhouette by k: k=2 → 0.2735 · k=3 → 0.2414 · k=4 → 0.2509 · <b>k=5 → 0.2788</b> ·
+            k=6 → 0.2656. The two methods largely agree (ARI 0.81): the sites fall into about five environmental regimes.</p>
+          </div>
+
+          <div class="ml-plots">
+            <figure class="ml-plot"><img src="/outputs/ml/rf_feature_importance.png" alt="Random Forest feature importance chart" loading="lazy">
+              <figcaption>Random Forest feature importance (Lab 5)</figcaption></figure>
+            <figure class="ml-plot"><img src="/outputs/ml/confusion_matrix.png" alt="Confusion matrix of the best classifier" loading="lazy">
+              <figcaption>Confusion matrix, Logistic Regression, 5-fold CV predictions (Lab 3)</figcaption></figure>
+            <figure class="ml-plot"><img src="/outputs/ml/cluster_scatter.png" alt="Scatter plot of the site clusters" loading="lazy">
+              <figcaption>Site clusters, K-Means with k=5 (Lab 10)</figcaption></figure>
+            <figure class="ml-plot"><img src="/outputs/ml/dendrogram.png" alt="Hierarchical clustering dendrogram" loading="lazy">
+              <figcaption>Hierarchical clustering dendrogram, Ward linkage (Lab 11)</figcaption></figure>
+          </div>
+
+          <div class="ml-card">
+            <div class="phead"><span class="ptitle">Predict playground: the trained model, in your browser</span><span class="chip">LIVE INFERENCE</span></div>
+            <p class="panel-note" style="margin:0 0 10px">Set the five pillar distances of a hypothetical base-site
+            pair. The prediction is computed on this page by the project's best trained regressor, a Linear
+            Regression on StandardScaler features, exported coefficient for coefficient from
+            <span class="mono">best_regressor.joblib</span>. No backend call is made.</p>
+            <div class="chips" style="margin-bottom:8px">
+              <button type="button" class="chipb" id="mlPresetDemo">Demo defaults (0.30 each)</button>
+              <button type="button" class="chipb" id="mlPresetPair">Real pair: Shackleton × Klyuchevskaya (official score 69.7)</button>
+            </div>
+            <div class="sliders" id="mlSliders"></div>
+            <label class="ml-soil-toggle">
+              <input type="checkbox" id="mlSoilMissing">
+              <span><b>No soil coverage</b> for this pair: the soil distance is set to the training median (0.5)
+              and the soil_missing flag is switched on, exactly as in Lab 1 preprocessing.</span>
+            </label>
+            <div class="ml-predict-out">
+              <div>
+                <div class="mono fs-k" style="color:var(--dim)">Predicted Analog Score</div>
+                <div class="ml-score mono" id="mlScore">—</div>
+              </div>
+              <p class="panel-note" style="margin:0;max-width:520px">Source: trained ML model (Linear Regression,
+              CV R² 0.9817), running locally in the browser. Compare it with the official formula score in the
+              Finder: the model has learned that formula's behaviour from the 56 training pairs.</p>
+            </div>
+          </div>
+
+          <p class="panel-note">Built for ML Lab AI-3202, Lab 14 Complex Computing Activity, by the ATLAS team.
+          Full code, data and report: the atlas-ml-cca project repository. The original ATLAS console views
+          (Overview, Bases, Finder, Compare, Mars, Method) are unchanged.</p>
+        </div>
+      </section>
+
+      <!-- ============ VIEW: METHODOLOGY ============ -->
+      <section class="view" id="page-methodology">
+        <div class="workspace glass">
+          <div class="ws-head">
+            <div><div class="mono ws-k">Formula · weights · limitations</div>
+            <h2>Methodology &amp; Sources</h2></div>
+            <p class="ws-sub">ATLAS — Analog Terrain &amp; Lunar Alignment System · Team Binary Knights ·
+            NASA Space Apps Challenge 2026. Data: NASA PDS &amp; PGDA · Copernicus DEM GLO-30 · NASA POWER · SoilGrids 2.0.</p>
+          </div>
+          <article class="markdown-body" id="methodologyBody"><p class="loading">Loading methodology…</p></article>
+        </div>
+      </section>
+
+      <!-- ============ OPERATOR GUIDE (info, bottom right) ============ -->
+      <div class="info-wrap" id="infoWrap">
+        <button type="button" class="info-btn" id="infoBtn" aria-label="Open user guide" aria-expanded="false" aria-controls="infoCard">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16.5"/><circle cx="12" cy="7.6" r="0.6" class="idot"/></svg>
+        </button>
+        <div class="info-card glass" id="infoCard" role="tooltip">
+          <div class="ptitle light">Operator Guide</div>
+          <ul class="guide-list">
+            <li><b>Base</b> — switch from the top bar or the base cards; every panel re-ranks instantly.</li>
+            <li><b>Ranking</b> — the orange ring on the map is the #1 match, mint is the runner-up; the dashed line is the top-3 path.</li>
+            <li><b>Finder</b> — mission presets and weight sliders re-score all 14 sites live. Click any row for its discovery note.</li>
+            <li><b>Compare</b> — radar shows per-factor similarity; a hollow marker means that factor had no data and was not scored.</li>
+            <li><b>Mission Log</b> — ALERTS flag real data gaps, e.g. sites with no soil coverage.</li>
+            <li><b>Data</b> — full CSV downloads live at the bottom of the Finder view.</li>
+          </ul>
+          <p class="guide-foot">Scores rank sites within this 14-site pool only. Full method, weights and limitations: Method view.</p>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script src="vendor/leaflet.js"></script>
+<script src="static-data.js"></script>
+<script src="static-api.js"></script>
+<script src="app.js"></script>
+<script src="ml-lab.js"></script>
+</body>
+</html>
