@@ -1,0 +1,57 @@
+moon_base,earth_site,dist_slope,dist_flat,dist_temperature,dist_relief,dist_soil,analog_score,soil_missing,suitability
+Amundsen,Mount Erebus,0.241,0.253,0.726,0.579,0.5,62.7,1,High
+Amundsen,Klyuchevskaya Volcanic Group,0.431,0.353,0.781,0.56,0.163,60.4,0,High
+Amundsen,Badain Jaran Desert,0.149,0.18,0.839,0.961,0.523,56.1,0,Moderate
+Amundsen,Elgygytgyn Crater,0.266,0.326,0.76,0.969,0.603,55.2,0,Moderate
+Amundsen,Deception Island,0.084,0.439,0.796,0.957,0.5,55.0,1,Moderate
+Amundsen,Lut Desert (Dasht-e Lut),0.369,0.485,0.908,0.953,0.0,53.6,0,Moderate
+Amundsen,Qaidam Basin,0.466,0.551,0.827,0.991,0.173,52.5,0,Moderate
+Amundsen,Manjanggul Lava Tube (Jeju),0.3,0.394,0.868,0.931,0.762,52.1,0,Moderate
+Amundsen,Salinas Grandes,0.461,0.551,0.89,0.966,0.226,51.9,0,Moderate
+Amundsen,Yamal Peninsula (Bovanenkovo),0.478,0.558,0.775,0.996,0.5,51.6,0,Moderate
+Amundsen,Tenoumer Crater,0.49,0.556,0.908,0.996,0.192,51.0,0,Moderate
+Amundsen,Undara Lava Tubes,0.4,0.52,0.898,0.961,0.626,50.7,0,Moderate
+Amundsen,Etosha Pan,0.518,0.561,0.899,1.0,0.5,48.1,1,Moderate
+Amundsen,Lonar Crater,0.424,0.547,0.907,0.988,1.0,46.9,0,Moderate
+Peary,Elgygytgyn Crater,0.145,0.099,0.852,0.175,0.603,63.1,0,High
+Peary,Lut Desert (Dasht-e Lut),0.249,0.258,1.0,0.158,0.0,61.5,0,High
+Peary,Qaidam Basin,0.345,0.324,0.919,0.196,0.173,61.5,0,High
+Peary,Yamal Peninsula (Bovanenkovo),0.358,0.332,0.867,0.201,0.5,60.4,0,High
+Peary,Salinas Grandes,0.341,0.324,0.982,0.172,0.226,60.0,0,High
+Peary,Mount Erebus,0.361,0.48,0.818,0.216,0.5,59.7,1,Moderate
+Peary,Badain Jaran Desert,0.27,0.406,0.931,0.167,0.523,59.3,0,Moderate
+Peary,Tenoumer Crater,0.369,0.329,1.0,0.202,0.192,59.2,0,Moderate
+Peary,Manjanggul Lava Tube (Jeju),0.18,0.168,0.96,0.137,0.762,58.4,0,Moderate
+Peary,Undara Lava Tubes,0.279,0.294,0.99,0.166,0.626,57.9,0,Moderate
+Peary,Deception Island,0.204,0.666,0.888,0.162,0.5,57.4,1,Moderate
+Peary,Etosha Pan,0.397,0.334,0.991,0.205,0.5,56.8,1,Moderate
+Peary,Klyuchevskaya Volcanic Group,0.551,0.579,0.873,0.235,0.163,56.6,0,Moderate
+Peary,Lonar Crater,0.303,0.321,0.999,0.193,1.0,53.0,0,Moderate
+Shackleton,Klyuchevskaya Volcanic Group,0.052,0.072,0.767,0.21,0.163,69.7,0,High
+Shackleton,Mount Erebus,0.242,0.171,0.712,0.229,0.5,67.4,1,High
+Shackleton,Deception Island,0.399,0.015,0.782,0.607,0.5,59.8,1,Moderate
+Shackleton,Badain Jaran Desert,0.333,0.245,0.825,0.612,0.523,59.0,0,Moderate
+Shackleton,Elgygytgyn Crater,0.748,0.75,0.746,0.62,0.603,49.2,0,Moderate
+Shackleton,Lut Desert (Dasht-e Lut),0.852,0.909,0.894,0.603,0.0,46.2,0,Moderate
+Shackleton,Manjanggul Lava Tube (Jeju),0.783,0.819,0.854,0.582,0.762,46.0,0,Moderate
+Shackleton,Qaidam Basin,0.948,0.976,0.813,0.641,0.173,44.4,0,Low
+Shackleton,Salinas Grandes,0.944,0.976,0.876,0.617,0.226,44.0,0,Low
+Shackleton,Undara Lava Tubes,0.882,0.945,0.884,0.611,0.626,43.8,0,Low
+Shackleton,Yamal Peninsula (Bovanenkovo),0.961,0.983,0.761,0.646,0.5,43.7,0,Low
+Shackleton,Tenoumer Crater,0.972,0.98,0.894,0.647,0.192,43.2,0,Low
+Shackleton,Lonar Crater,0.906,0.972,0.893,0.638,1.0,40.7,0,Low
+Shackleton,Etosha Pan,1.0,0.985,0.885,0.65,0.5,40.0,1,Low
+de Gerlache,Mount Erebus,0.091,0.005,0.66,0.098,0.5,72.1,1,High
+de Gerlache,Klyuchevskaya Volcanic Group,0.281,0.094,0.716,0.08,0.163,69.5,0,High
+de Gerlache,Deception Island,0.066,0.181,0.73,0.476,0.5,65.8,1,High
+de Gerlache,Badain Jaran Desert,0.001,0.078,0.774,0.481,0.523,64.2,0,High
+de Gerlache,Elgygytgyn Crater,0.416,0.584,0.695,0.489,0.603,57.5,0,Moderate
+de Gerlache,Lut Desert (Dasht-e Lut),0.519,0.743,0.842,0.472,0.0,54.6,0,Moderate
+de Gerlache,Manjanggul Lava Tube (Jeju),0.45,0.652,0.803,0.451,0.762,53.4,0,Moderate
+de Gerlache,Qaidam Basin,0.616,0.809,0.761,0.511,0.173,52.9,0,Moderate
+de Gerlache,Salinas Grandes,0.611,0.809,0.824,0.486,0.226,52.2,0,Moderate
+de Gerlache,Yamal Peninsula (Bovanenkovo),0.628,0.816,0.71,0.516,0.5,51.9,0,Moderate
+de Gerlache,Tenoumer Crater,0.64,0.814,0.842,0.516,0.192,51.4,0,Moderate
+de Gerlache,Undara Lava Tubes,0.55,0.778,0.832,0.481,0.626,51.4,0,Moderate
+de Gerlache,Etosha Pan,0.668,0.819,0.833,0.52,0.5,48.4,1,Moderate
+de Gerlache,Lonar Crater,0.574,0.805,0.842,0.507,1.0,47.4,0,Moderate

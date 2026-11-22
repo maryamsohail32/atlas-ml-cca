@@ -1,0 +1,15 @@
+site_name,country,terrain_type,elev_mean_m,slope_mean_deg,pct_slope_under_10deg,temp_mean_c,temp_seasonal_range_c,sand_pct,clay_pct
+Lut Desert (Dasht-e Lut),Iran,Arid basin,304.8,3.25,93.8,26.2,25.4,60.9,17.4
+Qaidam Basin,China,Arid basin,2714.7,1.41,99.2,5.9,28.2,48.5,17.2
+Badain Jaran Desert,China,Arid basin,1311.0,13.09,39.5,9.0,35.3,33.2,26.0
+Etosha Pan,Namibia,Salt flat,1080.9,0.43,100.0,23.9,10.9,47.9,23.6
+Salinas Grandes,Argentina,Salt flat,310.0,1.5,99.2,21.6,16.8,58.1,13.0
+Mount Erebus,Antarctica (Ross Island),Volcanic field,1801.1,14.83,33.5,-19.4,22.6,47.9,23.6
+Deception Island,Antarctica (South Shetlands),Volcanic field,118.5,11.85,18.3,-1.9,6.5,47.9,23.6
+Klyuchevskaya Volcanic Group,Russia (Kamchatka),Volcanic field,2347.7,18.44,25.4,-5.5,27.4,52.6,16.2
+Undara Lava Tubes,Australia (Queensland),Subterranean cave,733.2,2.67,96.7,23.6,8.7,47.9,32.7
+Manjanggul Lava Tube (Jeju),South Korea,Subterranean cave,182.8,4.56,86.4,16.3,20.0,33.0,29.6
+Yamal Peninsula (Bovanenkovo),Russia (Siberia),Permafrost terrain,7.8,1.18,99.8,-7.0,31.9,43.8,20.5
+Elgygytgyn Crater,Russia (Chukotka),Impact structure,527.0,5.21,80.8,-10.7,38.4,33.0,23.6
+Lonar Crater,India,Impact structure,542.3,2.21,98.9,26.0,13.2,24.8,47.9
+Tenoumer Crater,Mauritania (Sahara),Impact structure,258.7,0.96,99.6,26.1,19.9,49.9,25.5
