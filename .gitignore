@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Environments
+venv/
+.venv/
+env/
+
+# Generated model artifacts (rebuilt by the model scripts)
+outputs/models/*.joblib
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
