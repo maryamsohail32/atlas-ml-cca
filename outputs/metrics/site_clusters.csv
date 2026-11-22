@@ -1,0 +1,15 @@
+site_name,country,terrain_type,kmeans_cluster,hierarchical_cluster
+Lut Desert (Dasht-e Lut),Iran,Arid basin,2,2
+Qaidam Basin,China,Arid basin,4,4
+Badain Jaran Desert,China,Arid basin,0,0
+Etosha Pan,Namibia,Salt flat,2,2
+Salinas Grandes,Argentina,Salt flat,2,2
+Mount Erebus,Antarctica (Ross Island),Volcanic field,0,0
+Deception Island,Antarctica (South Shetlands),Volcanic field,0,0
+Klyuchevskaya Volcanic Group,Russia (Kamchatka),Volcanic field,0,0
+Undara Lava Tubes,Australia (Queensland),Subterranean cave,2,2
+Manjanggul Lava Tube (Jeju),South Korea,Subterranean cave,3,2
+Yamal Peninsula (Bovanenkovo),Russia (Siberia),Permafrost terrain,1,1
+Elgygytgyn Crater,Russia (Chukotka),Impact structure,1,1
+Lonar Crater,India,Impact structure,3,3
+Tenoumer Crater,Mauritania (Sahara),Impact structure,2,2

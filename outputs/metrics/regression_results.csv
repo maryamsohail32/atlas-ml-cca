@@ -1,0 +1,4 @@
+model,cv_MAE,cv_RMSE,cv_R2,test_R2
+Linear Regression,0.816,1.003,0.9817,0.9865
+Random Forest,3.255,3.862,0.7293,0.8151
+KNN Regressor (k=5),3.204,4.096,0.6956,0.8504

@@ -1,0 +1,23 @@
+{
+  "n_sites": 14,
+  "features": [
+    "elev_mean_m",
+    "slope_mean_deg",
+    "pct_slope_under_10deg",
+    "temp_mean_c",
+    "temp_seasonal_range_c",
+    "sand_pct",
+    "clay_pct"
+  ],
+  "silhouette_by_k": {
+    "2": 0.2735,
+    "3": 0.2414,
+    "4": 0.2509,
+    "5": 0.2788,
+    "6": 0.2656
+  },
+  "best_k": 5,
+  "kmeans_silhouette": 0.2788,
+  "hierarchical_silhouette": 0.2445,
+  "adjusted_rand_index": 0.8083
+}

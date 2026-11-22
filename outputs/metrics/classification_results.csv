@@ -1,0 +1,4 @@
+model,cv_accuracy
+Logistic Regression,0.9107
+Decision Tree,0.8571
+SVM (RBF),0.8571

@@ -1,0 +1,11 @@
+Best model: Logistic Regression (5-fold stratified CV predictions)
+
+              precision    recall  f1-score   support
+
+        High      0.857     0.923     0.889        13
+         Low      0.778     1.000     0.875         7
+    Moderate      0.970     0.889     0.928        36
+
+    accuracy                          0.911        56
+   macro avg      0.868     0.937     0.897        56
+weighted avg      0.920     0.911     0.912        56
